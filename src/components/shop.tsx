@@ -44,7 +44,14 @@ const Shop = ({ data }: ShopProps) => {
             {panels.map((panel, panelIndex) => (
               <div
                 key={`${sectionName}-panel[${panelIndex}]`}
-                className="panel"
+                className={[
+                  'panel',
+                  panel.some(
+                    (entry) => entry.items[0].rarity.value === 'legendary'
+                  ) && 'legendary',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
                 data-children={panel.length.toString()}
               >
                 {panel.map((entry, entryIndex) => {

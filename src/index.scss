@@ -127,7 +127,7 @@ body {
     }
   }
 
-  &[data-children="2"] {
+  &[data-children="2"]:not(.legendary) {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, 1fr);
 
@@ -149,6 +149,23 @@ body {
       & .image {
         background-size: contain;
       }
+    }
+  }
+
+  &.legendary[data-children="2"] {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+
+    & > .card:nth-child(1) {
+      grid-area: 1 / 1 / 3 / 2;
+
+      height: var(--card-height-normal);
+    }
+
+    & > .card:nth-child(2) {
+      grid-area: 1 / 2 / 3 / 3;
+
+      height: var(--card-height-normal);
     }
   }
 
