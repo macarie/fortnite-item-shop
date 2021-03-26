@@ -29,7 +29,6 @@ export const createSection = (
           shop[sectionIndex][panelIndex] = [entry]
         }
       } else {
-        console.log({ panelLength, panel: entry.categories[0] })
         shop[sectionIndex] = new Array(panelLength)
 
         shop[sectionIndex][panelIndex] = [entry]
