@@ -1,6 +1,7 @@
 import fixSpecialFeaturedName from './fix-specal-featured-name'
 import cleanPanel from './clean-panel'
 import sortEntries from './sort-entries'
+import cleanSpecial from './clean-special'
 
 import type ShopEntryType from '../types/shop-entry'
 
@@ -11,32 +12,45 @@ export const createSpecialSection = (
   sectionEntries: Array<Array<Array<ShopEntryType<string>>>>
 }> => {
   const tabs = [
-    ...entries
-      .reduce((shop, entry) => {
-        const tab = entry.sectionId
-        const tabArray = shop.get(tab) ?? []
+    ...[
+      ...entries
+        .reduce((shop, entry) => {
+          const tab = entry.sectionId
+          const tabArray = shop.get(tab) ?? []
 
-        tabArray.push(entry)
+          tabArray.push(entry)
 
-        if (!shop.has(tab)) {
-          shop.set(tab, tabArray)
+          if (!shop.has(tab)) {
+            shop.set(tab, tabArray)
+          }
+
+          return shop
+        }, new Map<string, Array<ShopEntryType<string>>>())
+        .entries(),
+    ]
+      .sort(([a], [b]) => {
+        if (a.startsWith('Special') && b.startsWith('Special')) {
+          return cleanPanel(a) - cleanPanel(b)
         }
 
-        return shop
-      }, new Map<string, Array<ShopEntryType<string>>>())
-      .entries(),
-  ]
-    .sort(([a], [b]) => {
-      if (a.startsWith('Special') && b.startsWith('Special')) {
-        return cleanPanel(a) - cleanPanel(b)
-      }
+        return 0
+      })
+      .reduce((map, [name, entry]) => {
+        const cleanName = cleanSpecial(name)
 
-      return 0
-    })
-    .map(([name, entry]) => ({
-      sectionName: fixSpecialFeaturedName(name),
-      sectionEntries: [[sortEntries(entry)]],
-    }))
+        if (map.has(cleanName)) {
+          map.get(cleanName)!.push(entry)
+        } else {
+          map.set(cleanName, [entry])
+        }
+
+        return map
+      }, new Map<string, Array<Array<ShopEntryType<string>>>>())
+      .entries(),
+  ].map(([name, entries]) => ({
+    sectionName: fixSpecialFeaturedName(name),
+    sectionEntries: entries.map((entry) => [sortEntries(entry)]),
+  }))
 
   return tabs
 }
