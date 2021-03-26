@@ -25,7 +25,7 @@ export const getFeaturedOrIcon = (length: number) => (
       return images.icon
 
     case 6:
-      if (index < 2) {
+      if (type.value === 'outfit' || index < 2) {
         return images.featured ?? images.icon
       }
 
