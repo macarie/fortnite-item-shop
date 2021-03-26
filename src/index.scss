@@ -320,6 +320,13 @@ body {
   display: flex;
   flex-direction: column;
 
+  &.gaminglegends {
+    // Purple 900
+    --darker-color: #4c1d95;
+    // Purple 500
+    --lighter-color: #8b5cf6;
+  }
+
   &.slurp {
     // Blue 700
     --darker-color: #059669;
