@@ -270,6 +270,13 @@ body {
   display: flex;
   flex-direction: column;
 
+  &.slurp {
+    // Blue 700
+    --darker-color: #059669;
+    // Green 600
+    --lighter-color: #60a5fa;
+  }
+
   &.icon {
     // Blue 500
     --darker-color: #3b82f6;
