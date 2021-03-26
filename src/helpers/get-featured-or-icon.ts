@@ -9,6 +9,13 @@ export const getFeaturedOrIcon = (length: number) => (
     case 1:
       return images.featured ?? images.icon
 
+    case 2:
+      if (type.value === 'outfit' || index === 0) {
+        return images.featured ?? images.icon
+      }
+
+      return images.icon
+
     case 3:
     case 5:
       if (type.value === 'outfit' || index === 0) {
