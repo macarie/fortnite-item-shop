@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import useRelativeTimeFormatter from '../hooks/use-relative-time-formatter'
 import createSection from '../helpers/create-section'
@@ -34,86 +34,93 @@ const Shop = ({ data }: ShopProps) => {
       ].map(({ sectionName, sectionEntries }) => {
         const isFeatured = sectionName === 'Featured'
 
-        return sectionEntries.map((panels, sectionIndex) => (
-          <section
-            key={`${sectionName}-section[${sectionIndex}]`}
-            className={`section ${sectionName
-              .toLocaleLowerCase()
-              .replace(/\s/g, '')}`}
-          >
-            {panels.map((panel, panelIndex) => (
-              <div
-                key={`${sectionName}-panel[${panelIndex}]`}
-                className={[
-                  'panel',
-                  panel.some(
-                    (entry) => entry.items[0].rarity.value === 'legendary'
-                  ) && 'legendary',
-                ]
-                  .filter(Boolean)
-                  .join(' ')}
-                data-children={panel.length.toString()}
+        return (
+          <Fragment key={`${sectionName}-supergroup`}>
+            <span className="title">{sectionName}</span>
+            {sectionEntries.map((panels, sectionIndex) => (
+              <section
+                key={`${sectionName}-section[${sectionIndex}]`}
+                className={`section ${sectionName
+                  .toLocaleLowerCase()
+                  .replace(/\s/g, '')}`}
               >
-                {panel.map((entry, entryIndex) => {
-                  const getImage = getFeaturedOrIcon(
-                    isFeatured ? panel.length : panels.length
-                  )
-                  const daysSinceLastSeen = daysSinceNow(
-                    new Date(secondLastOrLast(entry.items[0].shopHistory))
-                  )
-                  const isNew = daysSinceLastSeen === 0
-                  const isBundle = entry.bundle !== null
+                {panels.map((panel, panelIndex) => (
+                  <div
+                    key={`${sectionName}-panel[${panelIndex}]`}
+                    className={[
+                      'panel',
+                      panel.some(
+                        (entry) => entry.items[0].rarity.value === 'legendary'
+                      ) && 'legendary',
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
+                    data-children={panel.length.toString()}
+                  >
+                    {panel.map((entry, entryIndex) => {
+                      const getImage = getFeaturedOrIcon(
+                        isFeatured ? panel.length : panels.length
+                      )
+                      const daysSinceLastSeen = daysSinceNow(
+                        new Date(secondLastOrLast(entry.items[0].shopHistory))
+                      )
+                      const isNew = daysSinceLastSeen === 0
+                      const isBundle = entry.bundle !== null
 
-                  return (
-                    <div
-                      key={entry.items[0].name}
-                      className={`card ${
-                        isBundle ? 'bundle' : entry.items[0].rarity.value
-                      }`}
-                    >
-                      <div
-                        className="image"
-                        style={
-                          {
-                            '--image': `url(${
-                              isBundle
-                                ? entry.bundle!.image
-                                : getImage(
-                                    isFeatured ? entryIndex : panelIndex,
-                                    entry.items[0].images,
-                                    entry.items[0].type
-                                  )
-                            })`,
-                          } as React.CSSProperties
-                        }
-                      />
-                      <div className="middle">
-                        <div className="name">
-                          {isBundle ? entry.bundle!.name : entry.items[0].name}
-                        </div>
-                      </div>
-                      <div className="bottom">
-                        <div className="price">{entry.finalPrice}</div>
+                      return (
                         <div
-                          className={['ago', isNew && 'new']
-                            .filter(Boolean)
-                            .join(' ')}
+                          key={entry.items[0].name}
+                          className={`card ${
+                            isBundle ? 'bundle' : entry.items[0].rarity.value
+                          }`}
                         >
-                          {isNew
-                            ? 'New!'
-                            : relativeTimeFormatter.format(
-                                daysSinceLastSeen,
-                                'days'
-                              )}
+                          <div
+                            className="image"
+                            style={
+                              {
+                                '--image': `url(${
+                                  isBundle
+                                    ? entry.bundle!.image
+                                    : getImage(
+                                        isFeatured ? entryIndex : panelIndex,
+                                        entry.items[0].images,
+                                        entry.items[0].type
+                                      )
+                                })`,
+                              } as React.CSSProperties
+                            }
+                          />
+                          <div className="middle">
+                            <div className="name">
+                              {isBundle
+                                ? entry.bundle!.name
+                                : entry.items[0].name}
+                            </div>
+                          </div>
+                          <div className="bottom">
+                            <div className="price">{entry.finalPrice}</div>
+                            <div
+                              className={['ago', isNew && 'new']
+                                .filter(Boolean)
+                                .join(' ')}
+                            >
+                              {isNew
+                                ? 'New!'
+                                : relativeTimeFormatter.format(
+                                    daysSinceLastSeen,
+                                    'days'
+                                  )}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
+                      )
+                    })}
+                  </div>
+                ))}
+              </section>
             ))}
-          </section>
-        ))
+          </Fragment>
+        )
       })}
     </>
   )
