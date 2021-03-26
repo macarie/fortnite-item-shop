@@ -320,6 +320,13 @@ body {
   display: flex;
   flex-direction: column;
 
+  &.bundle {
+    // Indigo 600
+    --darker-color: #4f46e5;
+    // Pink 200
+    --lighter-color: #fbcfe8;
+  }
+
   &.gaminglegends {
     // Purple 900
     --darker-color: #4c1d95;

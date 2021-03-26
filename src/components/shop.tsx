@@ -55,26 +55,35 @@ const Shop = ({ data }: ShopProps) => {
                     new Date(secondLastOrLast(entry.items[0].shopHistory))
                   )
                   const isNew = daysSinceLastSeen === 0
+                  const isBundle = entry.bundle !== null
 
                   return (
                     <div
                       key={entry.items[0].name}
-                      className={`card ${entry.items[0].rarity.value}`}
+                      className={`card ${
+                        isBundle ? 'bundle' : entry.items[0].rarity.value
+                      }`}
                     >
                       <div
                         className="image"
                         style={
                           {
-                            '--image': `url(${getImage(
-                              isFeatured ? entryIndex : panelIndex,
-                              entry.items[0].images,
-                              entry.items[0].type
-                            )})`,
+                            '--image': `url(${
+                              isBundle
+                                ? entry.bundle!.image
+                                : getImage(
+                                    isFeatured ? entryIndex : panelIndex,
+                                    entry.items[0].images,
+                                    entry.items[0].type
+                                  )
+                            })`,
                           } as React.CSSProperties
                         }
                       />
                       <div className="middle">
-                        <div className="name">{entry.items[0].name}</div>
+                        <div className="name">
+                          {isBundle ? entry.bundle!.name : entry.items[0].name}
+                        </div>
                       </div>
                       <div className="bottom">
                         <div className="price">{entry.finalPrice}</div>
