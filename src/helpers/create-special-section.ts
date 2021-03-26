@@ -1,4 +1,5 @@
 import fixSpecialFeaturedName from './fix-specal-featured-name'
+import cleanPanel from './clean-panel'
 import sortEntries from './sort-entries'
 
 import type ShopEntryType from '../types/shop-entry'
@@ -24,10 +25,18 @@ export const createSpecialSection = (
         return shop
       }, new Map<string, Array<ShopEntryType<string>>>())
       .entries(),
-  ].map(([name, entry]) => ({
-    sectionName: fixSpecialFeaturedName(name),
-    sectionEntries: [[sortEntries(entry)]],
-  }))
+  ]
+    .sort(([a], [b]) => {
+      if (a.startsWith('Special') && b.startsWith('Special')) {
+        return cleanPanel(a) - cleanPanel(b)
+      }
+
+      return 0
+    })
+    .map(([name, entry]) => ({
+      sectionName: fixSpecialFeaturedName(name),
+      sectionEntries: [[sortEntries(entry)]],
+    }))
 
   return tabs
 }
