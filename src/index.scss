@@ -1,5 +1,77 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap");
 
+@property --bubble-1-x {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --bubble-1-y {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --bubble-2-x {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --bubble-2-y {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --bubble-3-x {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --bubble-3-y {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --bubble-4-x {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --bubble-4-y {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --bubble-5-x {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --bubble-5-y {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --bubble-6-x {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --bubble-6-y {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
 body {
   min-height: 100vh;
 
@@ -287,6 +359,62 @@ body {
   }
 }
 
+@keyframes bubble-sideways-1 {
+  0% {
+    --bubble-1-x: 17%;
+    --bubble-2-x: 90%;
+    --bubble-3-x: 80%;
+    --bubble-4-x: 20%;
+    --bubble-5-x: 50%;
+    --bubble-6-x: 40%;
+  }
+
+  100% {
+    --bubble-1-x: 10%;
+    --bubble-2-x: 75%;
+    --bubble-3-x: 85%;
+    --bubble-4-x: 10%;
+    --bubble-5-x: 55%;
+    --bubble-6-x: 50%;
+  }
+}
+
+@keyframes bubble-upwards-1 {
+  0% {
+    --bubble-1-y: calc(var(--bubble-1-y-from, var(--bubble-y-from)) + 20%);
+    --bubble-2-y: var(--bubble-2-y-from, var(--bubble-y-from));
+  }
+
+  100% {
+    --bubble-1-y: calc(var(--bubble-1-y-to, var(--bubbe-y-to)) - 20%);
+    --bubble-2-y: var(--bubble-2-y-to, var(--bubbe-y-to));
+  }
+}
+
+@keyframes bubble-upwards-2 {
+  0% {
+    --bubble-3-y: calc(var(--bubble-3-y-from, var(--bubble-y-from)) + 30%);
+    --bubble-4-y: calc(var(--bubble-4-y-from, var(--bubble-y-from)) + 60%);
+  }
+
+  100% {
+    --bubble-3-y: calc(var(--bubble-3-y-to, var(--bubbe-y-to)) - 30%);
+    --bubble-4-y: calc(var(--bubble-4-y-to, var(--bubbe-y-to)) - 60%);
+  }
+}
+
+@keyframes bubble-upwards-3 {
+  0% {
+    --bubble-5-y: calc(var(--bubble-5-y-from, var(--bubble-y-from)) + 10%);
+    --bubble-6-y: calc(var(--bubble-6-y-from, var(--bubble-y-from)) + 40%);
+  }
+
+  100% {
+    --bubble-5-y: calc(var(--bubble-5-y-to, var(--bubbe-y-to)) - 10%);
+    --bubble-6-y: calc(var(--bubble-6-y-to, var(--bubbe-y-to)) - 40%);
+  }
+}
+
 .card {
   border-radius: calc(1rem + 2px);
   background-color: white;
@@ -300,6 +428,64 @@ body {
     --darker-color: #059669;
     // Green 600
     --lighter-color: #60a5fa;
+
+    & .image {
+      --bubble-1-y: 130%;
+      --bubble-2-y: 130%;
+      --bubble-3-y: 130%;
+      --bubble-4-y: 130%;
+      --bubble-5-y: 130%;
+      --bubble-6-y: 130%;
+      --bubble-y-from: 120%;
+      --bubbe-y-to: -20%;
+
+      --bubble-color-lighter: rgba(167, 243, 208, 0.1);
+      --bubble-color-darker: rgba(209, 250, 229, 0.1);
+
+      background-image: var(--image),
+        radial-gradient(
+          var(--bubble-color-darker),
+          var(--bubble-color-lighter) 50%,
+          transparent 53%
+        ),
+        radial-gradient(
+          var(--bubble-color-darker),
+          var(--bubble-color-lighter) 50%,
+          transparent 53%
+        ),
+        radial-gradient(
+          var(--bubble-color-darker),
+          var(--bubble-color-lighter) 50%,
+          transparent 53%
+        ),
+        radial-gradient(
+          var(--bubble-color-darker),
+          var(--bubble-color-lighter) 50%,
+          transparent 53%
+        ),
+        radial-gradient(
+          var(--bubble-color-darker),
+          var(--bubble-color-lighter) 50%,
+          transparent 53%
+        ),
+        radial-gradient(
+          var(--bubble-color-darker),
+          var(--bubble-color-lighter) 50%,
+          transparent 53%
+        ),
+        radial-gradient(var(--lighter-color), var(--darker-color));
+      background-size: 150%, 40px 40px, 25px 25px, 50px 50px, 15px 15px,
+        35px 35px, 20px 20px, 150% !important;
+      background-position: top center, var(--bubble-1-x) var(--bubble-1-y),
+        var(--bubble-2-x) var(--bubble-2-y), var(--bubble-3-x) var(--bubble-3-y),
+        var(--bubble-4-x) var(--bubble-4-y), var(--bubble-5-x) var(--bubble-5-y),
+        var(--bubble-6-x) var(--bubble-6-y), top center;
+
+      animation: bubble-upwards-1 6s linear infinite,
+        bubble-upwards-2 5s 2s linear infinite,
+        bubble-upwards-3 7s 3s linear infinite,
+        bubble-sideways-1 1s ease-in-out infinite alternate;
+    }
   }
 
   &.icon {
