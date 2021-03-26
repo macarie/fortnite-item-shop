@@ -31,6 +31,7 @@ export type ShopEntryType<Section> = {
         | 'Uncommon'
         | 'Slurp'
         | 'Gaming Legends Series'
+        | 'Dark'
       value:
         | 'icon'
         | 'legendary'
@@ -39,6 +40,7 @@ export type ShopEntryType<Section> = {
         | 'uncommon'
         | 'slurp'
         | 'gaminglegends'
+        | 'dark'
     }
     shopHistory: string[]
     type: {

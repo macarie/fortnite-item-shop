@@ -344,6 +344,11 @@ body {
     --lighter-color: #fbcfe8;
   }
 
+  &.dark {
+    --darker-color: #4c1d95;
+    --lighter-color: #ec4899;
+  }
+
   &.gaminglegends {
     // Purple 900
     --darker-color: #4c1d95;
