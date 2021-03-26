@@ -25,12 +25,18 @@ export type ShopEntryType<Section> = {
     rarity: {
       displayValue:
         | 'Icon'
-        | 'Leggendary'
+        | 'Legendary'
         | 'Epic'
         | 'Rare'
         | 'Uncommon'
         | 'Slurp'
-      value: 'icon' | 'leggendary' | 'epic' | 'rare' | 'uncommon' | 'slurp'
+      value:
+        | 'icon'
+        | 'legendary'
+        | 'epic'
+        | 'rare'
+        | 'uncommon'
+        | 'slurp'
     }
     shopHistory: string[]
     type: {
