@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 
+import createFeaturedSection from '../helpers/create-featured-section'
 import createSection from '../helpers/create-section'
 import createSpecialSection from '../helpers/create-special-section'
 
@@ -9,16 +10,16 @@ import Section from './section'
 import type ShopType from '../types/shop'
 
 type ShopProps = {
-  data: ShopType
+  shop: ShopType['data']
 }
 
-const Shop = ({ data }: ShopProps) => {
-  const featured = createSection('Featured', data.data.featured.entries)
+const Shop = ({ shop }: ShopProps) => {
+  const featured = createFeaturedSection(shop.featured.entries)
   console.log(featured)
-  const daily = createSection('Daily', data.data.daily.entries)
+  const daily = createSection('Daily', shop.daily.entries)
   console.log(daily)
   const specialSections = createSpecialSection(
-    data.data.specialFeatured?.entries ?? []
+    shop.specialFeatured?.entries ?? []
   )
   console.log(specialSections)
 

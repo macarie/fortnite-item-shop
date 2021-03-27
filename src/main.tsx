@@ -6,14 +6,17 @@ import './index.scss'
 
 import Shop from './components/shop'
 
+import type ShopType from './types/shop'
+
 const getJSON = bent('json')
 
 const init = async () => {
-  const shop = await getJSON('https://fortnite-api.com/v2/shop/br')
+  const shop: ShopType = await getJSON('https://fortnite-api.com/v2/shop/br')
+  console.log(shop.data)
 
   ReactDOM.render(
     <React.StrictMode>
-      <Shop data={shop} />
+      <Shop shop={shop.data} />
     </React.StrictMode>,
     document.querySelector('.shop')
   )

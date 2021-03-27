@@ -42,6 +42,11 @@ export type ShopEntryType<Section> = {
         | 'gaminglegends'
         | 'dark'
     }
+    set: {
+      backendValue: string
+      text: string
+      value: string
+    }
     shopHistory: string[]
     type: {
       displayValue: string
