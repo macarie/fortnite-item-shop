@@ -9,9 +9,11 @@ export const createFeaturedSection = (
   const categorizedItems = new Map<string, Array<ShopEntryType<string>>>()
 
   for (const item of sortedItems) {
-    const setCode = `${item.items[0].set.backendValue}-${
-      item.items[0].type.value === 'outfit' ? 'outfit' : 'object'
-    }`
+    const setCode = `${
+      item.bundle === null
+        ? item.items[0].set?.backendValue ?? item.items[0].rarity.value
+        : item.bundle.name
+    }-${item.items[0].type.value === 'outfit' ? 'outfit' : 'object'}`
 
     if (categorizedItems.has(setCode)) {
       categorizedItems.get(setCode)!.push(item)

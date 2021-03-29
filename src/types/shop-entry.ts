@@ -46,7 +46,7 @@ export type ShopEntryType<Section> = {
       backendValue: string
       text: string
       value: string
-    }
+    } | null
     shopHistory: string[]
     type: {
       displayValue: string

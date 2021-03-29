@@ -30,7 +30,7 @@ export const Panel = ({
     >
       {panel.map((card, cardIndex) => (
         <Card
-          key={card.items[0].name}
+          key={card.bundle?.name ?? card.items[0].name}
           card={card}
           cardIndex={cardIndex}
           isFeaturedSection={isFeaturedSection}
