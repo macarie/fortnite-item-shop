@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Vibrant from 'node-vibrant'
 
 import useRelativeTimeFormatter from '../hooks/use-relative-time-formatter'
 import daysSinceNow from '../helpers/days-since-now'
@@ -31,6 +32,7 @@ const getImage = (card: CardProps['card'], cardSize: CardProps['size']) => {
 }
 
 export const Card = ({ card, size = 'normal' }: CardProps) => {
+  const [colors, setColors] = useState<[string, string] | null>(null)
   const relativeTimeFormatter = useRelativeTimeFormatter()
 
   const daysSinceLastSeen = daysSinceNow(
@@ -41,10 +43,28 @@ export const Card = ({ card, size = 'normal' }: CardProps) => {
 
   const image = getImage(card, size)
 
+  useEffect(() => {
+    const getPalette = async () => {
+      const { DarkVibrant, LightVibrant } = await Vibrant.from(
+        image
+      ).getPalette()
+
+      if (DarkVibrant && LightVibrant) {
+        setColors([DarkVibrant.hex, LightVibrant.hex])
+      }
+    }
+
+    void getPalette()
+  }, [image])
+
   const cardStyle = {
     '--image': `url("${image}")`,
+    ...(colors
+      ? {
+          '--darker-color': colors[0],
+          '--lighter-color': colors[1],
         }
-      />
+      : {}),
   }
 
   return (
