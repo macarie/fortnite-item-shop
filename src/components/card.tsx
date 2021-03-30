@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Vibrant from 'node-vibrant'
+import Vibrant from 'node-vibrant/dist/vibrant'
 
 import useRelativeTimeFormatter from '../hooks/use-relative-time-formatter'
 import daysSinceNow from '../helpers/days-since-now'
