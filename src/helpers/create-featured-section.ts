@@ -11,7 +11,7 @@ export const createFeaturedSection = (
   for (const item of sortedItems) {
     const setCode = `${
       item.bundle === null
-        ? item.items[0].set?.backendValue ?? item.items[0].rarity.value
+        ? item.items[0].set?.backendValue ?? item.items[0].name
         : item.bundle.name
     }-${item.items[0].type.value === 'outfit' ? 'outfit' : 'object'}`
 
@@ -22,13 +22,16 @@ export const createFeaturedSection = (
     }
   }
 
-  const groupsSplitBySection = new Map()
+  const groupsSplitBySection = new Map<
+    string,
+    Array<Array<ShopEntryType<string>>>
+  >()
 
   for (const group of categorizedItems.values()) {
     const sectionName = group[0].sectionId
 
     if (groupsSplitBySection.has(sectionName)) {
-      groupsSplitBySection.get(sectionName).push(group)
+      groupsSplitBySection.get(sectionName)!.push(group)
     } else {
       groupsSplitBySection.set(sectionName, [group])
     }

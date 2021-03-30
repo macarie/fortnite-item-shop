@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 
 import createFeaturedSection from '../helpers/create-featured-section'
-import createSection from '../helpers/create-section'
+import createDailySection from '../helpers/create-daily-section'
 import createSpecialSection from '../helpers/create-special-section'
 
 import SectionTitle from './section-title'
@@ -15,39 +15,34 @@ type ShopProps = {
 
 const Shop = ({ shop }: ShopProps) => {
   const featured = createFeaturedSection(shop.featured.entries)
-  console.log(featured)
-  const daily = createSection('Daily', shop.daily.entries)
-  console.log(daily)
+  const daily = createDailySection(shop.daily.entries)
   const specialSections = createSpecialSection(
     shop.specialFeatured?.entries ?? []
   )
-  console.log(specialSections)
+
+  const shopTabs = [
+    { sectionName: 'Featured', sectionEntries: featured },
+    { sectionName: 'Daily', sectionEntries: daily },
+    ...specialSections,
+  ]
+
+  console.log('shopTabs', shopTabs)
 
   return (
     <>
-      {[
-        { sectionName: 'Featured', sectionEntries: featured },
-        { sectionName: 'Daily', sectionEntries: daily },
-        ...specialSections,
-      ].map(({ sectionName, sectionEntries }) => {
-        const isFeaturedSection = sectionName === 'Featured'
+      {shopTabs.map(({ sectionName, sectionEntries }) => (
+        <Fragment key={`${sectionName}-supergroup`}>
+          <SectionTitle sectionName={sectionName} />
 
-        return (
-          <Fragment key={`${sectionName}-supergroup`}>
-            <SectionTitle sectionName={sectionName} />
-
-            {sectionEntries.map((panels, sectionIndex) => (
-              <Section
-                key={`${sectionName}-section[${sectionIndex}]`}
-                isFeaturedSection={isFeaturedSection}
-                panels={panels}
-                sectionIndex={sectionIndex}
-                sectionName={sectionName}
-              />
-            ))}
-          </Fragment>
-        )
-      })}
+          {sectionEntries.map((panels, sectionIndex) => (
+            <Section
+              key={`${sectionName}-section[${sectionIndex}]`}
+              panels={panels}
+              sectionName={sectionName}
+            />
+          ))}
+        </Fragment>
+      ))}
     </>
   )
 }

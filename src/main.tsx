@@ -12,14 +12,8 @@ const getJSON = bent('json')
 
 const init = async () => {
   const shop: ShopType = await getJSON('https://fortnite-api.com/v2/shop/br')
-  console.log(shop.data)
 
-  ReactDOM.render(
-    <React.StrictMode>
-      <Shop shop={shop.data} />
-    </React.StrictMode>,
-    document.querySelector('.shop')
-  )
+  ReactDOM.render(<Shop shop={shop.data} />, document.querySelector('.shop'))
 }
 
 void init()

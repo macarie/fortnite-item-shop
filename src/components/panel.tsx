@@ -5,40 +5,75 @@ import createClassName from '../helpers/create-class-name'
 import Card from './card'
 
 import type ShopEntryType from '../types/shop-entry'
+import type { CardProps } from './card'
+
+type PanelType = 'bundle' | 'outfits' | 'items'
+
+const computePanelType = (panel: Array<ShopEntryType<string>>): PanelType => {
+  if (panel[0].bundle !== null) {
+    return 'bundle'
+  }
+
+  if (panel.every((card) => card.items[0].type.value === 'outfit')) {
+    return 'outfits'
+  }
+
+  return 'items'
+}
+
+const createAndFillArray = (length: number) => {
+  const array = new Array(length).fill('small')
+
+  if (length % 2 === 1) {
+    array[0] = 'normal'
+  }
+
+  return array
+}
+
+const computeCardSize = (
+  panel: Array<ShopEntryType<string>>,
+  panelType: PanelType
+): ((index: number) => CardProps['size']) => {
+  if (panelType === 'bundle') {
+    return () => 'double'
+  }
+
+  if (panelType === 'outfits') {
+    return () => 'normal'
+  }
+
+  const cardSizes: Array<CardProps['size']> = createAndFillArray(panel.length)
+
+  return (index) => {
+    return cardSizes[index]
+  }
+}
 
 type PanelProps = {
   panel: Array<ShopEntryType<string>>
-  isFeaturedSection: boolean
-  panelIndex: number
-  panelsLength: number
 }
 
-export const Panel = ({
-  panel,
-  isFeaturedSection,
-  panelIndex,
-  panelsLength,
-}: PanelProps) => {
+export const Panel = ({ panel }: PanelProps) => {
+  const panelType = computePanelType(panel)
+  const getCardSize = computeCardSize(panel, panelType)
+
   return (
     <div
-      className={createClassName([
-        'panel',
-        panel.some((card) => card.items[0].rarity.value === 'legendary') &&
-          'legendary',
-      ])}
+      className={createClassName(['panel', panelType])}
       data-children={panel.length.toString()}
     >
-      {panel.map((card, cardIndex) => (
-        <Card
-          key={card.bundle?.name ?? card.items[0].name}
-          card={card}
-          cardIndex={cardIndex}
-          isFeaturedSection={isFeaturedSection}
-          panelIndex={panelIndex}
-          panelLength={panel.length}
-          panelsLength={panelsLength}
-        />
-      ))}
+      {panel.map((card, cardIndex) => {
+        const cardSize = getCardSize(cardIndex)
+
+        return (
+          <Card
+            key={card.bundle?.name ?? card.items[0].name}
+            card={card}
+            size={cardSize}
+          />
+        )
+      })}
     </div>
   )
 }

@@ -1,16 +1,17 @@
-import cleanPanel from './clean-panel'
+import getPanelNumber from './get-panel-number'
 
 import type ShopEntryType from '../types/shop-entry'
 
 export const sortEntries = (entries: Array<ShopEntryType<string>>) =>
   [...entries].sort((a, b) => {
-    const aMb = b.sortPriority - a.sortPriority
+    const aSortPriority = a.sortPriority
+    const bSortPriority = b.sortPriority
 
-    if (aMb === 0) {
-      return cleanPanel(a.categories[0]) - cleanPanel(b.categories[0])
+    if (aSortPriority === bSortPriority) {
+      return getPanelNumber(a.categories[0]) - getPanelNumber(b.categories[0])
     }
 
-    return aMb
+    return aSortPriority > bSortPriority ? -1 : 1
   })
 
 export default sortEntries
