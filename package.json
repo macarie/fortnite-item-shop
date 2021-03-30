@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "serve": "vite preview",
-    "lint": "xo"
+    "lint": "tsc && xo"
   },
   "dependencies": {
     "bent": "^7.3.12",
