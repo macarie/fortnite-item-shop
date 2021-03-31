@@ -49,23 +49,20 @@ export const Card = ({ card, size = 'normal' }: CardProps) => {
         image
       ).getPalette()
 
-      if (DarkVibrant && LightVibrant) {
-        setColors([DarkVibrant.hex, LightVibrant.hex])
-      }
+      setColors([DarkVibrant?.hex ?? '#6b7280', LightVibrant?.hex ?? '#d1d5db'])
     }
 
     void getPalette()
   }, [image])
 
-  const cardStyle = {
-    '--image': `url("${image}")`,
-    ...(colors
-      ? {
-          '--darker-color': colors[0],
-          '--lighter-color': colors[1],
-        }
-      : {}),
-  }
+  const cardStyle = colors
+    ? {
+        '--image': `url("${image}")`,
+        '--image-opacity': 1,
+        '--darker-color': colors[0],
+        '--lighter-color': colors[1],
+      }
+    : undefined
 
   return (
     <div
