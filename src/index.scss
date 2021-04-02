@@ -228,12 +228,18 @@ body {
         .name {
           position: relative;
 
-          background-color: #fff;
+          background-image: linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.5),
+            #fff 67%
+          );
+          backdrop-filter: blur(5px);
           border-radius: 1rem 1rem 0 0;
           box-shadow: 0 -4px 5px rgba(0, 0, 0, 0.15);
 
           font-size: 1.3rem;
           color: var(--darker-color);
+          text-shadow: 0 0 5px #fff, 0 0 10px #fff;
 
           &::before,
           &::after {
