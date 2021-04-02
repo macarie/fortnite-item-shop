@@ -83,7 +83,12 @@ export const Card = ({ card, size = 'normal' }: CardProps) => {
         </div>
       </div>
       <div className="bottom">
-        <div className="price">{card.finalPrice}</div>
+        <div className="price">
+          {card.regularPrice !== card.finalPrice && (
+            <del>{card.regularPrice}</del>
+          )}
+          {card.finalPrice}
+        </div>
         <div className={createClassName(['ago', isNew && 'new'])}>
           {isNew
             ? 'New!'
