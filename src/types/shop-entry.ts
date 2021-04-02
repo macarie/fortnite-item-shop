@@ -10,6 +10,7 @@ export type ShopEntryType<Section> = {
   categories: string[]
   finalPrice: number
   items: Array<{
+    added: string
     images: {
       featured: string | null
       icon: string
@@ -42,6 +43,7 @@ export type ShopEntryType<Section> = {
         | 'gaminglegends'
         | 'dark'
     }
+    regularPrice: number
     set: {
       backendValue: string
       text: string
