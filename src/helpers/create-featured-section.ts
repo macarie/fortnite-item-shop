@@ -11,7 +11,7 @@ export const createFeaturedSection = (
   for (const item of sortedItems) {
     const setCode = `${
       item.bundle === null
-        ? item.items[0].set?.backendValue ?? item.items[0].name
+        ? item.items[0].set?.backendValue ?? item.items[0].added
         : item.bundle.name
     }-${item.items[0].type.value === 'outfit' ? 'outfit' : 'object'}`
 
