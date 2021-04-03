@@ -11,6 +11,7 @@ export type ShopEntryType<Section> = {
   finalPrice: number
   items: Array<{
     added: string
+    id: string
     images: {
       featured: string | null
       icon: string
