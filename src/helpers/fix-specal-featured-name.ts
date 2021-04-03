@@ -5,7 +5,8 @@ export const fixSpecialFeaturedName = (name: string) => {
 
   return name
     .replace(/B$/, '')
-    .replace(/([A-Z\d])/g, ' $1')
+    .replace(/([A-Z]|\d+)/g, ' $1')
+    .replace(/\s\d$/, '')
     .trim()
 }
 
