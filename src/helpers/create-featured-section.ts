@@ -13,7 +13,9 @@ export const createFeaturedSection = (
       item.bundle === null
         ? item.items[0].set?.backendValue ?? item.items[0].added
         : item.bundle.name
-    }-${item.items[0].type.value === 'outfit' ? 'outfit' : 'object'}`
+    }[${item.items[0].type.value === 'outfit' ? 'outfit' : 'object'}]@${
+      item.sectionId
+    }`
 
     if (categorizedItems.has(setCode)) {
       categorizedItems.get(setCode)!.push(item)
