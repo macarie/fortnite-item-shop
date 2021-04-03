@@ -14,7 +14,12 @@ const computePanelType = (panel: Array<ShopEntryType<string>>): PanelType => {
     return 'bundle'
   }
 
-  if (panel.every((card) => card.items[0].type.value === 'outfit')) {
+  const numberOfOutfits = panel.reduce(
+    (outfits, card) => outfits + Number(card.items[0].type.value === 'outfit'),
+    0
+  )
+
+  if (numberOfOutfits >= panel.length / 2) {
     return 'outfits'
   }
 
