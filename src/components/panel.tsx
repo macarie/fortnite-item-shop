@@ -10,7 +10,10 @@ import type { CardProps } from './card'
 type PanelType = 'bundle' | 'outfits' | 'items'
 
 const computePanelType = (panel: Array<ShopEntryType<string>>): PanelType => {
-  if (panel[0].bundle !== null) {
+  if (
+    panel[0].bundle !== null ||
+    panel[0].items[0].id === 'CID_A_060_Athena_Commando_M_Daytrader_8MRO2'
+  ) {
     return 'bundle'
   }
 
