@@ -20,6 +20,12 @@
   initial-value: 0;
 }
 
+@property --image-lighter-step {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 0%;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -118,7 +124,12 @@ body {
         padding: 0 0 0.5rem;
 
         transition: 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
-        transition-property: --darker-color, --lighter-color, --image-opacity;
+        transition-property: --darker-color, --lighter-color, --image-opacity,
+          --image-lighter-step;
+
+        &:hover {
+          --image-lighter-step: 10%;
+        }
 
         &.small {
           --card-height: calc((28rem / 2) - 1rem);
@@ -163,8 +174,8 @@ body {
           width: var(--image-width);
 
           background-image: radial-gradient(
-            var(--gradient-shape) at 20% 10%,
-            var(--lighter-color),
+            var(--gradient-shape) at 25% 0,
+            var(--lighter-color) var(--image-lighter-step),
             var(--darker-color)
           );
           box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
