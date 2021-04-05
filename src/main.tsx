@@ -2,8 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import bent from 'bent'
 
-import './index.scss'
-
 import Shop from './components/shop'
 
 import type ShopType from './types/shop'
