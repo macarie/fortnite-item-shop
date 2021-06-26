@@ -16,9 +16,10 @@ type ShopProps = {
 const Shop = ({ shop }: ShopProps) => {
   const featured = createFeaturedSection(shop.featured.entries)
   const daily = createDailySection(shop.daily.entries)
-  const specialSections = createSpecialSection(
-    shop.specialFeatured?.entries ?? []
-  )
+  const specialSections = createSpecialSection([
+    ...(shop.specialFeatured?.entries ?? []),
+    ...(shop.specialDaily?.entries ?? []),
+  ])
 
   const shopTabs = [
     { sectionName: 'Featured', sectionEntries: featured },
