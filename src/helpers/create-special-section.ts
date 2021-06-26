@@ -3,6 +3,8 @@ import createFeaturedSection from './create-featured-section'
 
 import type ShopEntryType from '../types/shop-entry'
 
+const originaleSectionName = Symbol('originalSectionName')
+
 export const createSpecialSection = (
   specialItems: Array<ShopEntryType<string>>
 ): Array<{
@@ -20,9 +22,26 @@ export const createSpecialSection = (
     const sectionName = fixSpecialFeaturedName(featuredSection[0][0].sectionId)
 
     if (groupedSections.has(sectionName)) {
-      groupedSections.get(sectionName)!.push(featuredSection)
+      const originalName: string = Reflect.get(
+        groupedSections.get(sectionName)!,
+        originaleSectionName
+      )
+
+      if (originalName.localeCompare(featuredSection[0][0].sectionId) < 0) {
+        groupedSections.get(sectionName)!.push(featuredSection)
+      } else {
+        groupedSections.get(sectionName)!.unshift(featuredSection)
+      }
     } else {
-      groupedSections.set(sectionName, [featuredSection])
+      const section = [featuredSection]
+
+      Reflect.set(
+        section,
+        originaleSectionName,
+        featuredSection[0][0].sectionId
+      )
+
+      groupedSections.set(sectionName, section)
     }
   }
 
