@@ -9,6 +9,10 @@ export type ShopType = {
       name: 'DAILY'
       entries: Array<ShopEntryType<'Daily'>>
     }
+    specialDaily: {
+      name: null
+      entries: Array<ShopEntryType<string>>
+    }
     featured: {
       name: 'FEATURED'
       entries: Array<ShopEntryType<'Featured'>>
