@@ -57,6 +57,11 @@ export type ShopEntryType<Section> = {
     }
   }>
   regularPrice: number
+  section: {
+    id: string
+    name: string
+    index: number
+  }
   sectionId: Section
   sortPriority: number
 }

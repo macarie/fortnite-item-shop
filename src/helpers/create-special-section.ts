@@ -3,8 +3,6 @@ import createFeaturedSection from './create-featured-section'
 
 import type ShopEntryType from '../types/shop-entry'
 
-const originaleSectionName = Symbol('originalSectionName')
-
 export const createSpecialSection = (
   specialItems: Array<ShopEntryType<string>>
 ): Array<{
@@ -19,36 +17,29 @@ export const createSpecialSection = (
   >()
 
   for (const featuredSection of featuredSections) {
-    const sectionName = fixSpecialFeaturedName(featuredSection[0][0].sectionId)
+    const sectionName =
+      featuredSection[0][0].section?.name ??
+      fixSpecialFeaturedName(featuredSection[0][0].sectionId)
 
     if (groupedSections.has(sectionName)) {
-      const originalName: string = Reflect.get(
-        groupedSections.get(sectionName)!,
-        originaleSectionName
-      )
-
-      if (originalName.localeCompare(featuredSection[0][0].sectionId) < 0) {
-        groupedSections.get(sectionName)!.push(featuredSection)
-      } else {
-        groupedSections.get(sectionName)!.unshift(featuredSection)
-      }
+      groupedSections.get(sectionName)!.push(featuredSection)
     } else {
-      const section = [featuredSection]
-
-      Reflect.set(
-        section,
-        originaleSectionName,
-        featuredSection[0][0].sectionId
-      )
-
-      groupedSections.set(sectionName, section)
+      groupedSections.set(sectionName, [featuredSection])
     }
   }
 
-  return [...groupedSections.entries()].map(([name, sections]) => ({
-    sectionName: name,
-    sectionEntries: sections,
-  }))
+  return [...groupedSections.entries()]
+    .map(([name, sections]) => ({
+      sectionName: name,
+      sectionEntries: sections.sort(
+        (a, b) => a[0][0].section.index - b[0][0].section.index
+      ),
+    }))
+    .sort(
+      (a, b) =>
+        a.sectionEntries[0][0][0].section.index -
+        b.sectionEntries[0][0][0].section.index
+    )
 }
 
 export default createSpecialSection
