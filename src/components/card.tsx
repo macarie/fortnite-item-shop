@@ -13,6 +13,14 @@ export type CardProps = {
   size: 'small' | 'normal' | 'double'
 }
 
+const getOfferImage = (card: CardProps['card']) => {
+  if (card.newDisplayAsset?.materialInstances[0].images.Flipbook) {
+    return null;
+  }
+
+  return card.newDisplayAsset?.materialInstances[0].images.OfferImage
+}
+
 const getImage = (card: CardProps['card'], cardSize: CardProps['size']) => {
   switch (cardSize) {
     case 'small':
@@ -22,12 +30,17 @@ const getImage = (card: CardProps['card'], cardSize: CardProps['size']) => {
       return (
         card.bundle?.image ??
         card.items[0].images.featured ??
+        getOfferImage(card) ??
         card.items[0].images.icon
       )
 
     case 'normal':
     default:
-      return card.items[0].images.featured ?? card.items[0].images.icon
+      return (
+        card.items[0].images.featured ??
+        getOfferImage(card) ??
+        card.items[0].images.icon
+      )
   }
 }
 
