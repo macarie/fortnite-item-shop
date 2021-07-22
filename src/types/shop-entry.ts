@@ -56,6 +56,20 @@ export type ShopEntryType<Section> = {
       value: string
     }
   }>
+  newDisplayAsset: {
+    materialInstances: Array<{
+      colors: {
+        Background_Color_A: string
+        Background_Color_B: string
+        FallOff_Color: string
+      }
+      images: {
+        Flipbook: string
+        OfferImage: string
+      }
+
+    }>
+  }
   regularPrice: number
   section: {
     id: string
