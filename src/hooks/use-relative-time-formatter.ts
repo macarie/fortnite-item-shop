@@ -1,16 +1,18 @@
-import { useMemo } from 'react'
+import mem from 'mem'
 
-export const useRelativeTimeFormatter = (
-  locale = 'en-US',
-  numeric: 'always' | 'auto' = 'always',
-  style: 'long' | 'short' | 'narrow' = 'long'
-) => {
-  const formatter = useMemo(
-    () => new Intl.RelativeTimeFormat(locale, { numeric, style }),
-    [locale, numeric, style]
-  )
+export const useRelativeTimeFormatter = mem(
+  (
+    locale = 'en-US',
+    numeric: 'always' | 'auto' = 'always',
+    style: 'long' | 'short' | 'narrow' = 'long'
+  ) => {
+    const formatter = new Intl.RelativeTimeFormat(locale, { numeric, style })
 
-  return formatter
-}
+    return formatter
+  },
+  {
+    cacheKey: (args) => args.join(','),
+  }
+)
 
 export default useRelativeTimeFormatter

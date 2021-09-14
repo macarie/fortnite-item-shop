@@ -67,7 +67,6 @@ export type ShopEntryType<Section> = {
         Flipbook: string
         OfferImage: string
       }
-
     }>
   }
   regularPrice: number
